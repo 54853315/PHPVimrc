@@ -1,0 +1,3 @@
+执行命令"sudo vimcdoc.sh -i"即可
+
+然后在vim中输入“:help” 就可以看到中文帮助了！
