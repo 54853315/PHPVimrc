@@ -1,0 +1,4 @@
+# CRAZYPHPERVIMCONFIG
+
+
+[阅读README.md](https://github.com/54853315/CRAZYPHPERVIMCONFIG/blob/master/vim配置/README.md)
