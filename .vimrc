@@ -1,48 +1,51 @@
-set nocompatible   " 设置VIM不兼容VI
-
-" ====整体风格设置=====
-set t_Co=256
 syntax on
-set background=light
-"xoria256
-" Bundle 'Lokaltog/powerline' ", {'rtp': 'powerline/bindings/vim/'}
 
-" PluginInstall
+" PluginInstall 插件
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'The-NERD-tree'
-Plugin 'majutsushi/tagbar' 
-Plugin 'tpope/vim-fugitive'
-Plugin 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
-Plugin 'L9'
-Plugin 'sainnhe/sonokai'
-Plugin 'schmich/vim-guifont'
-Plugin 'mxw/vim-jsx'
+call vundle#begin('~/.vim/bundle/')
+Plugin 'VundleVim/Vundle.vim'   " let Vundle manage Vundle, required
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'vim-airline/vim-airline'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" 侧边文件浏览器
+Plugin 'The-NERD-tree'
+" 侧边导航
+Plugin 'majutsushi/tagbar'
+" 简单的Git指令包
+Plugin 'tpope/vim-fugitive'
+" 在编辑时显示git change
+Plugin 'airblade/vim-gitgutter'
+" PHP自动补全
+Plugin 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
+Plugin 'L9'
+" 主题包
+Plugin 'sainnhe/sonokai'
+" Vim字体设置
+Plugin 'schmich/vim-guifont'
+" 支持JSX
+Plugin 'mxw/vim-jsx'
+" 文件查找
+Plugin 'git@github.com:ctrlpvim/ctrlp.vim.git'
 "Plugin 'Lokaltog/vim-powerline'
 call vundle#end()
 
-"====================主题设置==================
-colorscheme sonokai
+"主题设置
+colorscheme sonokai "or xoria256
 
-"==========================guifont++===============
-"让vim像IDE一样一键放大缩小字号
-let guifontpp_size_increment=1 "每次更改的字号
-let guifontpp_smaller_font_map="<M-Down>" "放大
+let guifontpp_size_increment=2              "每次更改的字号
+let guifontpp_smaller_font_map="<M-Down>"   "放大
 let guifontpp_larger_font_map="<M-Up>"      "缩小
 let guifontpp_original_font_map="<M-Home>"  "默认大小
-
+set nocompatible
+set t_Co=256
+set background=light
 set guifont=Menlo\ Regular:h24
 set clipboard=unnamed
-set guioptions-=T " Removes top toolbar
-set guioptions-=r " Removes right hand scroll bar
-set go-=L " Removes left hand scroll bar
+set guioptions-=T               " Removes top toolbar
+set guioptions-=r               " Removes right hand scroll bar
+set go-=L                       " Removes left hand scroll bar
 set linespace=15
-set cursorline "突出显示当前行
+set cursorline                  "突出显示当前行
 set wildmenu                    "vim 自身命令行模式智能补全"
 set showmode                    " always show what mode we're currently editing in
 set nowrap                      " don't wrap lines
@@ -61,60 +64,62 @@ set number                      " always show line numbers
 set ignorecase                  " ignore case when searching
 set smartcase                   " ignore case if search pattern is all lowercase,
 set timeout timeoutlen=200 ttimeoutlen=100
-set visualbell           " don't beep
-set noerrorbells         " don't beep
-set autowrite  "Save on buffer switch
+set visualbell                  " don't beep
+set noerrorbells                " don't beep
+set autowrite                   "Save on buffer switch
 set mouse=a
-
-" 进入时不显示上一次的搜索结果
-" exec "nohlsearch"  
-set incsearch " 启用即时搜索
-
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
-
-
-"Easy escaping to normal model
-imap jj <esc>
+set incsearch                   " 启用即时搜索
+" exec "nohlsearch"  " 进入时不显示上一次的搜索结果
+set showcmd
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set encoding=utf-8
 
 "Auto change directory to match current file ,cd
 nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
 
-"Resize vsplit
-" nmap <C-v> :vertical resize +5<cr>
+ "方便没有Ecs键的朋友
+imap jj <esc>
+
+nmap <C-+> :vertical resize +5<cr>      "Resize vsplit
+nmap <C--> :vertical resize -5<cr>
 nmap 25 :vertical resize 40<cr>
-nmap 50 <c-w>=
 nmap 75 :vertical resize 120<cr>
-
-nmap <C-b> :NERDTreeToggle<cr>
-
-"Load the current buffer in Chrome
-nmap ,c :!open -a Google\ Chrome<cr>
-
-"Show (partial) command in the status line
-set showcmd
-
-" Create split below
-nmap rsp :rightbelow sp<cr>
-" Open splits
-nmap vs :vsplit<cr>
+nmap vs :vsplit<cr>                     " Open splits
 nmap sp :split<cr>
-" Quickly go forward or backward to buffer
-nmap :bp :BufSurfBack<cr>
+nmap ,c :!open -a Google\ Chrome<cr>    "Load the current buffer in Chrome
+nmap <C-b> :NERDTreeToggle<cr>
+nmap rsp :rightbelow sp<cr>             " Create split below
+nnoremap <D-p> :CtrlP<cr>                    " Familiar commands for file/symbol browsing
+"map <D-p> :CtrlP<cr>                    " Familiar commands for file/symbol browsing
+map <C-r> :CtrlPBufTag<cr>
+nmap :bp :BufSurfBack<cr>               " Quickly go forward or backward to buffer
 nmap :bn :BufSurfForward<cr>
+map "+y :w !pbcopy<CR><CR>              " 按y复制选中内容，按p粘贴
+map "+p :r !pbpaste<CR><CR> 
+vmap <C-x> :!pbcopy<cr>                 " ctrl-x 剪切
+vmap <C-c> :w !pbcopy<cr><cr>           
+" nmap <C-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <C-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+
+nmap <F9> <ESC> :TagbarToggle<CR> 
+
+nmap <C-t> <Esc>:tabnew <CR>            " Open tab
+map R :source $MYVIMRC<CR>              " Reload vim 
+map S :w<CR>                            " save buffer file
+map Q :q<CR>                            " quit vim
+nmap <F9> <ESC> :TagbarToggle<CR> 
+
+" NERDTree
+autocmd VimEnter * NERDTree   "自动打开
+let NERDTreeShowHidden=1     " 显示所有文件
+" CtrlP Stuff
+let g:ctrlp_extensions = ['buffertag']
 
 highlight Search cterm=underline
 
-" Swap files out of the project root
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
-
-" PHP IDE zone 
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP   "PHP的自动补全并格式化
-" 自动打开NERDTree
-autocmd VimEnter * NERDTree
+"PHP的自动补全并格式化
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
 " Run PHPUnit tests
 map <Leader>t :!phpunit %<cr>
@@ -125,7 +130,6 @@ let g:EasyMotion_leader_key = '<Leader>'
 " Powerline (Fancy thingy at bottom stuff)
 let g:Powerline_symbols = 'fancy'
 " set laststatus=2   " Always show the statusline
-set encoding=utf-8 " Necessary to show Unicode glyphs
 " set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 
 autocmd cursorhold * set nohlsearch
@@ -172,12 +176,6 @@ function! FacadeLookup()
     execute ":edit vendor/laravel/framework/src/Illuminate/" . classes[facade]
 endfunction
 nmap ,lf :call FacadeLookup()<cr>
-
-" CtrlP Stuff
-
-" Familiar commands for file/symbol browsing
-map <D-p> :CtrlP<cr>
-" map <C-t> :CtrlPBufTag<cr>
 
 " I don't want to pull up these folders/files when calling CtrlP
 set wildignore+=*/vendor/**
@@ -227,35 +225,13 @@ filetype plugin indent on    " required 打开文件类型的插件和缩进
 
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
-" 按y复制选中内容，按p粘贴
-map "+y :w !pbcopy<CR><CR>
-map "+p :r !pbpaste<CR><CR>
-" ctrl-x 剪切
-vmap <C-x> :!pbcopy<cr>
-" ctrl-c 复制
-vmap <C-c> :w !pbcopy<cr><cr>
-" ctrl-v 粘贴
-" nmap <C-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-imap <C-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
 
 
-" Open tab
-nmap <C-t> <Esc>:tabnew <CR>
-" Reload vim 
-map R :source $MYVIMRC<CR>
-" save buffer file
-map S :w<CR>
-" quit vim
-map Q :q<CR>
-" next and current screen 
-
-nmap <F9> <ESC> :TagbarToggle<CR> 
-
-" go zone 
+" golang setting 
     let g:tagbar_type_go = {
         \ 'ctagstype' : 'go',
         \ 'kinds'     : [
@@ -285,6 +261,8 @@ nmap <F9> <ESC> :TagbarToggle<CR>
     \ }
 
 
-" reactjs zone 
+" reactjs setting 
     let g:jsx_ext_required = 0 " Allow JSX in normal JS files
     let g:syntastic_javascript_checkers = ['eslint']
+
+" vuejs setting
