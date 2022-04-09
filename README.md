@@ -1,28 +1,21 @@
-# CRAZYPHPERVIMCONFIG
+# 熊宝的VIM配置
 
 
 通过配置，使Vim可以看起来像ide一样开发PHP。
 
 如果喜欢折腾的话，就一起来玩VIM吧。
 
-（图稍后放出）
+![预览](https://www.crazyphper.com/vim_preview/vim_preview.png)
 
-> 本配置是在macOS（Catalina 10.15.3）下完成的，Vim版本是`VIM -Vi Improved 8.2`，因为用到了YCM，所以使用huge版本。
+> 本配置在macbook Pro M1（Monterey 12.3）下完成，Vim版本是`VIM -Vi Improved 8.2`，因为用到了YCM，所以使用huge版本。
 
-如果macOS系统自带的vim因各种莫名其妙的原因导致python3支持无法启用的话（尤其是使用了5年以上的macOS，会有无数个python版本），建议使用`brew install vim`。从vim8开始，brew所安装的vim自带python3支持。
+建议使用`brew install vim`。从vim8开始，brew所安装的vim自带python3支持，MacOS自带的VIM没有真彩支持。
 
-
-
-
-- 配置PHP环境
 - 安装使用
-- 插件配置
-  - vim-php
+- 插件依赖说明
   - YouCompleteMe
   - PHPCD
   - 其他插件
-
-## 配置PHP环境
 
 ...
 
@@ -32,19 +25,21 @@
 
 ```bash
 
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/plugin/Vundle.vim
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 wget https://github.com/54853315/PHPVimrc/blob/master/vimrc/.vimrc > ~/vim/.vimrc
+
+# 安装MacOS运行YCM所需的依赖 ，其他系统依赖如何安装见https://github.com/ycm-core/YouCompleteMe
+brew install cmake python go nodejs
+
+#安装TagBar的依赖
+brew install ctags-exuberant 
 
 ```
 
 打开vim，输入`:PluginInstall`进行安装。
 
 
-## 插件管理
-
-#### not an editor command: PluginInstall
-
- 你可能把`~/.vim/bundle/`下的文件夹全部清空了，执行`git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/plugin/Vundle.vim`来将原有的包进行安装。
+## 插件依赖说明
 
 ### YouCompleteMe 
 
@@ -52,8 +47,10 @@ wget https://github.com/54853315/PHPVimrc/blob/master/vimrc/.vimrc > ~/vim/.vimr
 The ycmd server SHUT DOWN (restart with ':YcmRestartServer'). YCM core library not detected; you need to compile YCM before
 using it. Follow the instructions in the documentation.
 ```
- 前往插件目录`.vim/bundle/YouCompleteMe`，执行安装命令`./install.py`，等待安装100%，重新进入vim即可。
 
+ 前往插件目录`.vim/bundle/YouCompleteMe`，执行安装命令`/usr/bin/python3  ./install.py --all` ，等待安装100%，重新进入vim即可。
+
+> 强烈建议指定python3的路径！
 
 ### PHPCD
 
