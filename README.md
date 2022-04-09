@@ -1,13 +1,13 @@
 # 熊宝的VIM配置
 
 
-通过配置，使Vim可以看起来像ide一样开发PHP。
+这份Vim配置适合用来开发PHP,GoLang,Vue,Typescript,React。
 
 如果喜欢折腾的话，就一起来玩VIM吧。
 
 ![预览](https://www.crazyphper.com/vim_preview/vim_preview.png)
 
-> 本配置在macbook Pro M1（Monterey 12.3）下完成，Vim版本是`VIM -Vi Improved 8.2`，因为用到了YCM，所以使用huge版本。
+本配置在macbook Pro M1（Monterey 12.3）下完成，Vim版本是`VIM -Vi Improved 8.2`，因为用到了YCM，所以使用huge版本。
 
 建议使用`brew install vim`。从vim8开始，brew所安装的vim自带python3支持，MacOS自带的VIM没有真彩支持。
 
