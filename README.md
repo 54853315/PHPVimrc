@@ -7,9 +7,11 @@
 
 ![预览](https://www.crazyphper.com/vim_preview/vim_preview.png)
 
-本配置在macbook Pro M1（Monterey 12.3）下完成，Vim版本是`VIM -Vi Improved 8.2`，因为用到了YCM，所以使用huge版本。
+本配置在macbook Pro M1（`Monterey 12.3`）下完成，Vim版本是`VIM -Vi Improved 8.2`。
 
-建议使用`brew install vim`。从vim8开始，brew所安装的vim自带python3支持，MacOS自带的VIM没有真彩支持。
+请使用`brew install vim` 安装huge版本的VIM。从vim8开始，brew所安装的vim自带python3支持，MacOS自带的VIM可没有真彩支持😯。
+
+# 目录
 
 - 安装使用
 - 插件依赖说明
@@ -17,7 +19,6 @@
   - PHPCD
   - 其他插件
 
-...
 
 ## 安装使用
 
