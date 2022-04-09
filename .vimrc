@@ -1,3 +1,12 @@
+scriptencoding utf-8
+" ============================================================================
+" Author: konakona
+" Blog: http://blog.crazyphper.com
+" Version: v0.1.0
+" Update Time: 2022-04-08
+
+" ============================================================================
+
 syntax on
 
 " PluginInstall 插件
@@ -7,6 +16,7 @@ Plugin 'VundleVim/Vundle.vim'   " let Vundle manage Vundle, required
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'vim-airline/vim-airline'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'L9'
 " 侧边文件浏览器
 Plugin 'The-NERD-tree'
 " 侧边导航
@@ -15,29 +25,50 @@ Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-fugitive'
 " 在编辑时显示git change
 Plugin 'airblade/vim-gitgutter'
+" Paint css colors with the real color 需要用GO安装
+"Plugin 'lilydjwg/colorizer' 如果安装后，启动vim时报错，可以看下你的终端是否支持 :echo has('termguicolors')
+Plugin 'https://github.com/BourgeoisBear/clrzr'
 " PHP自动补全
 Plugin 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
-Plugin 'L9'
+" Golang Plugins
+Plugin 'fatih/vim-go'
 " 主题包
 Plugin 'sainnhe/sonokai'
 " Vim字体设置
 Plugin 'schmich/vim-guifont'
 " 支持JSX
 Plugin 'mxw/vim-jsx'
+" 支持Vue语法高亮
+"Plugin 'posva/vim-vue'
+" Vue.js syntax and highlighting
+Plugin 'tao12345666333/vim-vue'
+" Dockerfile support
+Plugin 'ekalinin/Dockerfile.vim'
 " 文件查找
 Plugin 'git@github.com:ctrlpvim/ctrlp.vim.git'
+Plugin 'fisadev/vim-ctrlp-cmdpalette'
+" Git integration
+Plugin 'motemen/git-vim'
+" Tab list panel
+Plugin 'kien/tabman.vim'
+Plugin 'ycm-core/YouCompleteMe'
 "Plugin 'Lokaltog/vim-powerline'
 call vundle#end()
 
 "主题设置
-colorscheme sonokai "or xoria256
-
+colorscheme sonokai
+let g:sonokai_style = 'shusia'  "另一个更好看的风格 andromeda
+"let g:sonokai_better_performance = 1       "加快主题加载速度
+let g:solarized_termcolors=256
 let guifontpp_size_increment=2              "每次更改的字号
 let guifontpp_smaller_font_map="<M-Down>"   "放大
 let guifontpp_larger_font_map="<M-Up>"      "缩小
 let guifontpp_original_font_map="<M-Home>"  "默认大小
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'
 set nocompatible
-set t_Co=256
 set background=light
 set guifont=Menlo\ Regular:h24
 set clipboard=unnamed
@@ -48,7 +79,9 @@ set linespace=15
 set cursorline                  "突出显示当前行
 set wildmenu                    "vim 自身命令行模式智能补全"
 set showmode                    " always show what mode we're currently editing in
-set nowrap                      " don't wrap lines
+set wrap                    
+set cc=80
+set cc+=120
 set tabstop=4                   " a tab is four spaces
 set smarttab
 set backspace=2                   " 可以一直删到上一行
@@ -110,9 +143,11 @@ map S :w<CR>                            " save buffer file
 map Q :q<CR>                            " quit vim
 nmap <F9> <ESC> :TagbarToggle<CR> 
 
-" NERDTree
-autocmd VimEnter * NERDTree   "自动打开
+"auto open or close NERDTree
+autocmd vimenter * if !argc() | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let NERDTreeShowHidden=1     " 显示所有文件
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$']  " 不需要显示的文件
 " CtrlP Stuff
 let g:ctrlp_extensions = ['buffertag']
 
@@ -220,7 +255,6 @@ nmap ,2  :call AddDependency()<cr>
 
 
 filetype on                  " 打开时检查文件类型
-
 filetype plugin indent on    " required 打开文件类型的插件和缩进
 
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
@@ -232,37 +266,70 @@ endif
 
 
 " golang setting 
-    let g:tagbar_type_go = {
-        \ 'ctagstype' : 'go',
-        \ 'kinds'     : [
-            \ 'p:package',
-            \ 'i:imports:1',
-            \ 'c:constants',
-            \ 'v:variables',
-            \ 't:types',
-            \ 'n:interfaces',
-            \ 'w:fields',
-            \ 'e:embedded',
-            \ 'm:methods',
-            \ 'r:constructor',
-            \ 'f:functions'
-        \ ],
-        \ 'sro' : '.',
-        \ 'kind2scope' : {
-            \ 't' : 'ctype',
-            \ 'n' : 'ntype'
-        \ },
-        \ 'scope2kind' : {
-            \ 'ctype' : 't',
-            \ 'ntype' : 'n'
-        \ },
-        \ 'ctagsbin'  : 'gotags',
-        \ 'ctagsargs' : '-sort -silent'
-    \ }
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 
 
 " reactjs setting 
-    let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-    let g:syntastic_javascript_checkers = ['eslint']
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+let g:syntastic_javascript_checkers = ['eslint']
 
 " vuejs setting
+let g:vue_pre_processors = ['pug', 'scss', 'vue']
+
+" clrzr setting
+if has('termguicolors')
+  " for neovim >= 0.1.5 and vim >= 8
+  let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+  let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+  set termguicolors
+elseif has('neovim')
+  " for neovim 0.1.3 and 0.1.4
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+else
+  " for vim 7
+  set t_Co=256
+endif
+
+" YouComplateMe setting
+set completeopt=menu,menuone
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_min_num_identifier_candidate_chars = 2
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_complete_in_strings=1
+highlight PMenu ctermfg=0 ctermbg=242 guifg=black guibg=darkgrey
+let g:ycm_semantic_triggers =  {
+                        \   'c': ['->', '.'],
+                        \   'perl': ['->'],
+                        \   'cs,d,elixir,go,groovy,java,javascript,julia,perl6,python,scala,typescript,vb': ['.'],
+                        \   'php': ['->', '::'],
+                        \   'lua': ['.', ':'],
+                        \ }

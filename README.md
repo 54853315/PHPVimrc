@@ -20,7 +20,6 @@
   - vim-php
   - YouCompleteMe
   - PHPCD
-  - TagBar
   - 其他插件
 
 ## 配置PHP环境
@@ -34,7 +33,7 @@
 ```bash
 
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/plugin/Vundle.vim
-wget https://github.com/54853315/CRAZYPHPERVIMCONFIG/blob/master/vimrc/.vimrc > ~/vim/.vimrc
+wget https://github.com/54853315/PHPVimrc/blob/master/vimrc/.vimrc > ~/vim/.vimrc
 
 ```
 
@@ -43,9 +42,9 @@ wget https://github.com/54853315/CRAZYPHPERVIMCONFIG/blob/master/vimrc/.vimrc > 
 
 ## 插件管理
 
-** not an editor command: PluginInstall **
+#### not an editor command: PluginInstall
 
- 你可能把`~/.vim/bundle/`下的文件夹全部清空了，执行`git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim`来将原有的包进行安装。
+ 你可能把`~/.vim/bundle/`下的文件夹全部清空了，执行`git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/plugin/Vundle.vim`来将原有的包进行安装。
 
 ### YouCompleteMe 
 
@@ -58,7 +57,7 @@ using it. Follow the instructions in the documentation.
 
 ### PHPCD
 
-安装过程中, phpcd.vim 本身会 `composer install` 一次. 若失败请手工 cd 到 phpcd.vim 目录去 执行 `composer install`. 
+装过程中, phpcd.vim 本身会 `composer install` 一次. 若失败请手工 cd 到 phpcd.vim 目录去 执行 `composer install`. 
 
 ### TagBar
 
@@ -66,6 +65,3 @@ using it. Follow the instructions in the documentation.
 
 `brew install ctags-exuberant `
 
-#### 其他插件
-
-...
