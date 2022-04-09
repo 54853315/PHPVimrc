@@ -1,15 +1,14 @@
 # 熊宝的VIM配置
 
+![预览](https://www.crazyphper.com/vim_preview/vim_preview.png)
 
 这份Vim配置适合用来开发PHP,GoLang,Vue,Typescript,React。
 
 如果喜欢折腾的话，就一起来玩VIM吧。
 
-![预览](https://www.crazyphper.com/vim_preview/vim_preview.png)
-
 本配置在macbook Pro M1（`Monterey 12.3`）下完成，Vim版本是`VIM -Vi Improved 8.2`。
 
-请使用`brew install vim` 安装huge版本的VIM。从vim8开始，brew所安装的vim自带python3支持，MacOS自带的VIM可没有真彩支持😯。
+请使用`brew install vim` 安装huge版本的VIM。如果使用阉割版的VIM会遇到非常多的安装使用问题，或者主题无法完整渲染之类（比如MacOS自带的VIM 8 就不支持24色）。
 
 # 目录
 
