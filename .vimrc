@@ -14,11 +14,14 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim/bundle/')
 Plugin 'VundleVim/Vundle.vim'   " let Vundle manage Vundle, required
 Plugin 'git://git.wincent.com/command-t.git'
+" 状态栏
 Plugin 'vim-airline/vim-airline'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'L9'
 " 侧边文件浏览器
 Plugin 'The-NERD-tree'
+ " 可视化缩进插件
+Plugin 'nathanaelkane/vim-indent-guides'    
 " 侧边导航
 Plugin 'majutsushi/tagbar'
 " 简单的Git指令包
@@ -47,8 +50,6 @@ Plugin 'ekalinin/Dockerfile.vim'
 " 文件查找
 Plugin 'git@github.com:ctrlpvim/ctrlp.vim.git'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
-" Git integration
-Plugin 'motemen/git-vim'
 " Tab list panel
 Plugin 'kien/tabman.vim'
 Plugin 'ycm-core/YouCompleteMe'
@@ -128,28 +129,37 @@ nnoremap <D-p> :CtrlP<cr>                    " Familiar commands for file/symbol
 map <C-r> :CtrlPBufTag<cr>
 nmap :bp :BufSurfBack<cr>               " Quickly go forward or backward to buffer
 nmap :bn :BufSurfForward<cr>
-map "+y :w !pbcopy<CR><CR>              " 按y复制选中内容，按p粘贴
-map "+p :r !pbpaste<CR><CR> 
-vmap <C-x> :!pbcopy<cr>                 " ctrl-x 剪切
+nmap "+y :w !pbcopy<CR><CR>              " 按y复制选中内容
+nmap "+p :r !pbpaste<CR>                 " 按p粘贴 
+vmap <C-x> :!pbcopy<CR>                 " ctrl-x 剪切
 vmap <C-c> :w !pbcopy<cr><cr>           
 " nmap <C-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 imap <C-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 
-nmap <F9> <ESC> :TagbarToggle<CR> 
-
-nmap <C-t> <Esc>:tabnew <CR>            " Open tab
-map R :source $MYVIMRC<CR>              " Reload vim 
-map S :w<CR>                            " save buffer file
-map Q :q<CR>                            " quit vim
-nmap <F9> <ESC> :TagbarToggle<CR> 
+nnoremap <F9> <ESC> :TagbarToggle<CR> 
+nmap <C-[> <ESC>:tabp <CR>
+nmap <C-]> <ESC>:tabn <CR>
+nmap td <Esc>:tabnew <CR>                " Open tab
+nnoremap R :source $MYVIMRC<CR>              " Reload vim 
+nnoremap S :w<CR>                           " save buffer file
+nnoremap Q :q<CR>                            " quit vim
+nnoremap <C-i> <ESC> :IndentGuidesToggle<CR>
+nnoremap <C-k> <ESC> :Git blame<CR>
 
 "auto open or close NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-let NERDTreeShowHidden=1     " 显示所有文件
+let NERDTreeShowHidden=1                   " 显示所有文件
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']  " 不需要显示的文件
+let g:NERDTreeMapOpenInTabSilent='<2-LeftMouse>'
 " CtrlP Stuff
 let g:ctrlp_extensions = ['buffertag']
+" 缩进设置
+"let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 1
+"set ts=4 sw=4 et
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
 
 highlight Search cterm=underline
 
@@ -157,7 +167,7 @@ highlight Search cterm=underline
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
 " Run PHPUnit tests
-map <Leader>t :!phpunit %<cr>
+nmap <Leader>t :!phpunit %<cr>
 
 " Easy motion stuff
 let g:EasyMotion_leader_key = '<Leader>'
