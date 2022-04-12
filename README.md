@@ -16,6 +16,7 @@
 - 插件依赖说明
   - YouCompleteMe
   - PHPCD
+  - php-cs-fixer
   - 其他插件
 
 
@@ -61,4 +62,13 @@ using it. Follow the instructions in the documentation.
 需要安装依赖[Exuberant Ctags](http://ctags.sourceforge.net/) >= 5.5 ， OS X自带的`ctags`不是Exuberant Ctags，需要使用brew安装。
 
 `brew install ctags-exuberant `
+
+### php-cs-fixer
+
+由于vim-php-cs-fixer还未支持php-cs-fixer 3+，因此这里只能够选择2.19.3，但也能够满足PSR-12格式化的需要了。
+
+```bash
+# 安装最后一个v2版本
+composer global require friendsofphp/php-cs-fixer:2.19.3
+```
 
