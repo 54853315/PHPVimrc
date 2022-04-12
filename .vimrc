@@ -33,6 +33,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'https://github.com/BourgeoisBear/clrzr'
 " PHP自动补全
 Plugin 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' }
+" PHP格式化
+Plugin 'stephpy/vim-php-cs-fixer'
 " Golang Plugins
 Plugin 'fatih/vim-go'
 " 主题包
@@ -182,6 +184,23 @@ autocmd cursormoved * set hlsearch
 
 " Remove search results
 command! H let @/=""
+
+" If php-cs-fixer is in $PATH, you don't need to define line below
+" let g:php_cs_fixer_path = "~/php-cs-fixer.phar" " define the path to the php-cs-fixer.phar
+
+" If you use php-cs-fixer version 2.x
+let g:php_cs_fixer_rules = "@PSR12"          " options: --rules (default:@PSR2)
+"let g:php_cs_fixer_cache = ".php_cs.cache" " options: --cache-file
+"let g:php_cs_fixer_config_file = '.php_cs' " options: --config
+" End of php-cs-fixer version 2 config params
+
+let g:php_cs_fixer_php_path = "php"               " Path to PHP
+let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
+nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
+let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
+let g:php_cs_fixer_level='all'                    " 防止php-cs-fixer报没有level指令的错误
 
 " If you prefer the Omni-Completion tip window to close when a selection is
 " made, these lines close it on movement in insert mode or when leaving
