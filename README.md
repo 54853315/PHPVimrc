@@ -2,6 +2,9 @@
 
 ![预览](https://www.crazyphper.com/vim_preview/vim_preview.png)
 
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/1081252/215977001-fefa08a4-0c82-4632-a01c-94c0e2bf49a0.png">
+
+
 这份Vim配置适合用来开发PHP,GoLang,Vue,Typescript,React。
 
 如果喜欢折腾的话，就一起来玩VIM吧。
